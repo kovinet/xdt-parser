@@ -1,12 +1,12 @@
 {
-  "name": "druc/xdt-parser",
+  "name": "kovinet/xdt-parser",
   "type": "library",
   "description": "Parse German healthcare data interchange formats GDT, LDT and BDT",
   "keywords": [
     "druc",
     "xdt-parser"
   ],
-  "homepage": "https://github.com/druc/xdt-parser",
+  "homepage": "https://github.com/kovinet/xdt-parser",
   "license": "MIT",
   "authors": [
     {
@@ -25,12 +25,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Druc\\XdtParser\\": "src"
+      "Kovinet\\XdtParser\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Druc\\XdtParser\\Tests\\": "tests"
+      "Kovinet\\XdtParser\\Tests\\": "tests"
     }
   },
   "scripts": {

@@ -1,16 +1,9 @@
 <?php
 
-namespace Druc\XdtParser;
+namespace Kovinet\XdtParser;
 
 class XdtParser
 {
-    /**
-     * Array to hold mappings to different xdt keys
-     * Eg: ['first_name' => '2031', 'last_name' => '2031'];
-     * @var array
-     */
-    private $fieldsMap;
-
     /**
      * Holds the content unparsed rows
      * @var array
@@ -25,9 +18,9 @@ class XdtParser
      * @param array $fieldsMap
      * @return XdtParser
      */
-    public static function make(string $content, array $fieldsMap = [])
+    public static function make(string $content)
     {
-        return new static($content, $fieldsMap);
+        return new static($content);
     }
 
     /**
@@ -35,9 +28,8 @@ class XdtParser
      * @param string $content
      * @param array $fieldsMap
      */
-    private function __construct(string $content, array $fieldsMap = [])
+    private function __construct(string $content)
     {
-        $this->fieldsMap = $fieldsMap;
         $this->xdtRows = explode(PHP_EOL, $content);
         $this->parseXdtRows();
     }
@@ -73,21 +65,6 @@ class XdtParser
 
     /**
      * @param string $field
-     * @return null
-     */
-    public function first(string $field)
-    {
-        foreach ($this->parsedRows as $row) {
-            if ($row['key'] === $this->getKey($field)) {
-                return $row['value'];
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $field
      * @return array|mixed|null
      */
     public function find(string $field)
@@ -111,37 +88,23 @@ class XdtParser
     }
 
     /**
-     * @param string $field
-     * @return string
-     */
-    public function getKey(string $field)
-    {
-        return $this->fieldsMap[$field] ?? $field;
-    }
-
-    /**
-     * @param string $key
-     * @return string
-     */
-    public function getFieldName(string $key)
-    {
-        foreach ($this->fieldsMap as $field => $k) {
-            if ($k === $key) {
-                return $field;
-            }
-        }
-        return $key;
-    }
-
-    /**
      * @return array
      */
-    public function getMapped()
+    public function getGrouped()
     {
         $result = [];
 
-        foreach ($this->fieldsMap as $field => $key) {
-            $result[$field] = $this->find($field);
+        $groupIdentifier = '8000';
+        $i = -1;
+        foreach ($this->parsedRows as $row) {
+            if ($row['key'] === '8000') {
+                $i++;
+            }
+
+            $result[$i][] = $row;
+//            $result[$i][] = $row;
+//
+
         }
 
         return $result;
